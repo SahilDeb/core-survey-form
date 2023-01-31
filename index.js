@@ -1,4 +1,5 @@
 import express from "express";
+import { config } from "dotenv";
 
 const app = express();
 
@@ -7,7 +8,11 @@ app.get("/", (req, res) => {
     res.send({ hi: "there" });
 })
 
-const PORT = 3000;
+if (process.env.NODE_ENV !== 'production') {
+    config();
+}
+
+const PORT = process.env.PORT;
 
 app.listen(PORT, (error) =>{
     if(!error)
