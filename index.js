@@ -1,16 +1,18 @@
 import express from "express";
 import { config } from "dotenv";
+import "./services/passport.js";
+import authRoutes from "./routes/auth.js";
+import appRoutes from "./routes/app.js";
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.status(200);
-    res.send({ hi: "there" });
-})
-
+// Config used to pick variables from .env file
 if (process.env.NODE_ENV !== 'production') {
     config();
 }
+
+authRoutes(app);
+appRoutes(app);
 
 const PORT = process.env.PORT;
 
