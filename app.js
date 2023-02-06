@@ -1,15 +1,14 @@
 import express from "express";
+import mongoose from "mongoose";
 import { config } from "dotenv";
 import "./services/passport.js";
 import authRoutes from "./routes/auth.js";
-import appRoutes from "./routes/app.js";
+import appRoutes from "./routes/index.js";
 
 const app = express();
+config();
 
-// Config used to pick variables from .env file
-if (process.env.NODE_ENV !== 'production') {
-    config();
-}
+mongoose.connect(process.env.MONGO_URI);
 
 authRoutes(app);
 appRoutes(app);

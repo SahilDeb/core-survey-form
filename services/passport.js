@@ -3,9 +3,7 @@ import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
 
 // Config used to pick variables from .env file
-if (process.env.NODE_ENV !== 'production') {
-    config();
-}
+config();
 
 passport.use(new Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
