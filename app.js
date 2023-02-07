@@ -1,9 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import { config } from "dotenv";
-import "./services/passport.js";
 import authRoutes from "./routes/auth.js";
 import appRoutes from "./routes/index.js";
+
+import "./models/User.js";
+import "./services/passport.js";
 
 const app = express();
 config();

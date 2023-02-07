@@ -1,9 +1,12 @@
 import { config } from "dotenv";
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
+import mongoose from 'mongoose';
 
 // Config used to pick variables from .env file
 config();
+
+const User = mongoose.model('users');
 
 passport.use(new Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -13,5 +16,7 @@ passport.use(new Strategy({
     scope: [ 'profile', 'email' ],
     passReqToCallback: true,
   }, (req, accessToken, refreshToken, profile, done) => {
-    console.log(profile);
+    new User({
+      googleId: profile.id
+    }).save();
   } ))
