@@ -1,11 +1,11 @@
-const appRoutes = (app) => {
-    app.use("/login", (req, res) => {
-        res.send({ page: "Login" });
-    })
+// const appRoutes = (app) => {
+//     app.use("/login", (req, res) => {
+//         res.send({ page: "Login" });
+//     })
     
-    app.get('/home', (req, res) => {
-        res.send({ page: "Home" })
-    });
-};
+//     app.get('/home', (req, res) => {
+//         res.send({ page: "Home" })
+//     });
+// };
 
-export default appRoutes;
+// export default appRoutes;

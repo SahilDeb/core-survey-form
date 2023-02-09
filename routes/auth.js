@@ -13,13 +13,25 @@ import passport from "passport";
  * redirected back to the app at `GET /auth/google/callback/accounts.google.com`.
  */
 
+const BASE_URL = '/auth/';
+
 const authRoutes = (app) => {
-    app.use("/auth/google", passport.authenticate("google"))
+    app.use(BASE_URL + "google",
+        passport.authenticate("google", { scope: ['profile'] })
+    );
+
     
-    app.get('/auth/google/callback', passport.authenticate('google', {
-        successReturnToOrRedirect: '/',
-        failureRedirect: '/login'
-    }));
+    app.get(BASE_URL + 'google/callback',
+    passport.authenticate('google'),
+    async (err, req, res, next) => {
+        // Successful authentication, redirect home.
+        res.redirect('/api/surveys');
+    });
+
+    app.use(BASE_URL + "logout", (req, res) => {
+        req.logout();
+        res.send(req.user);
+    });
 };
 
 export default authRoutes;

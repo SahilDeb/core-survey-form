@@ -1,16 +1,28 @@
 import express from "express";
 import mongoose from "mongoose";
 import { config } from "dotenv";
+import cookieSession from "cookie-session";
+import passport from "passport";
 import authRoutes from "./routes/auth.js";
-import appRoutes from "./routes/index.js";
 
 import "./models/User.js";
 import "./services/passport.js";
+import appRoutes from "./routes/page.js";
 
 const app = express();
 config();
 
 mongoose.connect(process.env.MONGO_URI);
+
+app.use(
+    cookieSession({
+    keys: [process.env.COOKIE_SECRET_KEY],
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+})
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 authRoutes(app);
 appRoutes(app);
